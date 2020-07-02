@@ -18,7 +18,7 @@ Then, open: http://localhost:8080/
 ## Development mode
 
 ```bash
-mvn compile quarkus:dev
+mvn quarkus:dev
 ```
 Then, open: http://localhost:8080/
 
