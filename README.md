@@ -58,8 +58,11 @@ for i in (seq 8000 8250); QUARKUS_HTTP_PORT=$i ../target/todo-backend-1.0-SNAPSH
 #watch the process 'top' data
 top -bc |grep "runner"
 
-#
+# try
 http :8000/hello
+
+#check rss for specific pid
+ps -o pid,rss yourprocessid
 ```
 
 
