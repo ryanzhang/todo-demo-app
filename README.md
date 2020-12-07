@@ -49,11 +49,12 @@ Then, open: http://localhost:8080/
 ```bash
 mvn clean package -Pnative -DskipTests
 ```
+![quarkus-native-build-snapshot](quarkus-native-build-snapshot.png?raw=true)
 
 ## Demo batch running the native binary mode
 ```bash
 #This only apply to fish shell
-for i in (seq 8000 8250); QUARKUS_HTTP_PORT=$i ../target/todo-backend-1.0-SNAPSHOT-runner > /tmp/todo-app-$i.log&; end
+for i in (seq 8000 8250); QUARKUS_HTTP_PORT=$i target/todo-backend-1.0-SNAPSHOT-runner > /tmp/todo-app-$i.log&;end sh time-to-first-response.sh;
 
 #watch the process 'top' data
 top -bc |grep "runner"
@@ -63,8 +64,26 @@ http :8000/hello
 
 #check rss for specific pid
 ps -o pid,rss yourprocessid
+
+killall target/todo-backend-1.0-SNAPSHOT-runner
 ```
 
+## Demo batch running JVM mode
+```bash
+#This only apply to fish shell
+for i in (seq 8000 8050); QUARKUS_HTTP_PORT=$i java -jar target/todo-backend-1.0-SNAPSHOT-runner.jar > /tmp/todo-app-$i.log&;end sh time-to-first-response.sh;
+
+#watch the process 'top' data
+top -bc |grep "runner"
+
+# try
+http :8000/hello
+
+#check rss for specific pid
+ps -o pid,rss yourprocessid
+
+killall java
+```
 
 
 
