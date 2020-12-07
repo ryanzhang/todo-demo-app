@@ -49,7 +49,7 @@ Then, open: http://localhost:8080/
 ```bash
 mvn clean package -Pnative -DskipTests
 ```
-![quarkus-native-build-snapshot](quarkus-native-build-snapshot.png?raw=true)
+![quarkus-native-build-snapshot](quarkus-native-build-snapshot.png)
 
 ## Demo batch running the native binary mode
 ```bash
