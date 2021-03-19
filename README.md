@@ -8,7 +8,7 @@ Please run the database as following:
 ```bash
 # memlock requires sudo permission
 sudo podman  run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 \
-    --name postgres-quarkus-rest-http-crud -e POSTGRES_USER=restcrud \
+    --name -qpostgresuarkus-rest-http-crud -e POSTGRES_USER=restcrud \
     -e POSTGRES_PASSWORD=restcrud -e POSTGRES_DB=rest-crud \
     -p 5432:5432 postgres:10.5
 ```
@@ -93,6 +93,10 @@ while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8000/todo.html)" 
 echo First response completed
 date
 ```
+
+## Build for production
+QUARKUS_PROFILE=PROD  mvn clean package
+
 
 
 

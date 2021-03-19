@@ -1,6 +1,26 @@
 FROM ubi8/openjdk-8
 #FROM ubi8/openjdk-11
+
+LABEL   project="cctv-paas-sample" \
+        maintainer="rzhang" \
+        contact="rzhang@redhat.com" \
+        vendor="Red Hat" \
+        is-GA="no" \
+        version="1.0.0" \
+        release-date="2021-02-03"
+
 ENV JAVA_OPTIONS=-Dquarkus.http.host=0.0.0.0
+
+# Put lib in separate container layer on purpose
 COPY target/lib/* /deployments/lib/
+
 COPY target/*-runner.jar /deployments/app.jar
-ENTRYPOINT [ "/usr/bin/java","-jar", "/deployments/app.jar" ]
+
+WORKDIR /deployments
+
+EXPOSE 8080
+
+#Develop and Debug only
+# CMD [ "/usr/bin/java","-jar", "app.jar" ]
+
+ENTRYPOINT [ "/usr/bin/java","-jar", "app.jar" ]
