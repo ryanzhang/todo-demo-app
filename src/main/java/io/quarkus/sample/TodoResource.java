@@ -7,6 +7,11 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Timed;
+
 import java.util.List;
 
 
@@ -27,6 +32,8 @@ public class TodoResource {
 
     @GET
     @Path("/{id}")
+    @Counted(name= "getOneTask", description = "How many get method being triggered.")
+    @Timed(name = "getOneTaskTimer", description = "How long get one task perform", unit = MetricUnits.MILLISECONDS)
     public Todo getOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
@@ -36,6 +43,8 @@ public class TodoResource {
     }
 
     @POST
+    @Counted(name= "postOneTask", description = "How many get method being triggered.")
+    @Timed(name = "postOneTaskTimer", description = "How long get one task perform", unit = MetricUnits.MILLISECONDS)
     @Transactional
     public Response create(@Valid Todo item) {
         item.persist();
@@ -57,6 +66,8 @@ public class TodoResource {
 
     @DELETE
     @Transactional
+    @Counted(name= "deleteOneTask", description = "How many delete method being triggered.")
+    @Timed(name = "deleteOneTaskTimer", description = "How long delete one task perform", unit = MetricUnits.MILLISECONDS)
     public Response deleteCompleted() {
         Todo.deleteCompleted();
         return Response.noContent().build();

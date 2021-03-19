@@ -11,10 +11,7 @@ LABEL   project="cctv-paas-sample" \
 
 ENV JAVA_OPTIONS=-Dquarkus.http.host=0.0.0.0
 
-# Put lib in separate container layer on purpose
-COPY target/lib/* /deployments/lib/
-
-COPY target/*-runner.jar /deployments/app.jar
+COPY target/todo-backend-1.0-SNAPSHOT.jar /a.jar
 
 WORKDIR /deployments
 
@@ -23,4 +20,4 @@ EXPOSE 8080
 #Develop and Debug only
 # CMD [ "/usr/bin/java","-jar", "app.jar" ]
 
-ENTRYPOINT [ "/usr/bin/java","-jar", "app.jar" ]
+ENTRYPOINT [ "/usr/bin/java","-jar", "quarkus-run.jar" ]
