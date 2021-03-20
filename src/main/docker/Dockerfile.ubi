@@ -1,5 +1,5 @@
-FROM ubi8/openjdk-8
-#FROM ubi8/openjdk-11
+# FROM ubi8/openjdk-8
+FROM ubi8/openjdk-11
 
 LABEL   project="cctv-paas-sample" \
         maintainer="rzhang" \
@@ -11,13 +11,13 @@ LABEL   project="cctv-paas-sample" \
 
 ENV JAVA_OPTIONS=-Dquarkus.http.host=0.0.0.0
 
-COPY target/todo-backend-1.0-SNAPSHOT.jar /a.jar
+COPY ./target/quarkus-app /quarkus-app
 
-WORKDIR /deployments
+WORKDIR /quarkus-app
 
 EXPOSE 8080
 
 #Develop and Debug only
-# CMD [ "/usr/bin/java","-jar", "app.jar" ]
+# CMD [ "/usr/bin/java","-jar", "quarkus-run.jar" ]
 
 ENTRYPOINT [ "/usr/bin/java","-jar", "quarkus-run.jar" ]

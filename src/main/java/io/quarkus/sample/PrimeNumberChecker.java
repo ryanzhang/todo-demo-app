@@ -21,7 +21,8 @@ public class PrimeNumberChecker {
     @Produces(MediaType.TEXT_PLAIN)
     @Counted(name = "performedChecks", description = "How many primality checks have been performed.")
     @Timed(name = "checksTimer", description = "A measure of how long it takes to perform the primality test.", unit = MetricUnits.MILLISECONDS)
-    public String checkIfPrime(@PathParam long number) {
+    public String checkIfPrime(@PathParam("number") long number) {
+        System.out.println("*****debug" + number);
         if (number < 1) {
             return "Only natural numbers can be prime numbers.";
         }

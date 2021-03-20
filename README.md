@@ -97,6 +97,8 @@ date
 ## Build for production
 QUARKUS_PROFILE=PROD  mvn clean package
 
-
+# 注意事项
+根目录下有一个.dockerignore 是为了优化podman build时候的；
+里面定义了过滤的内容，如果target目录输出有变化，需要及时调整内容;
 
 
