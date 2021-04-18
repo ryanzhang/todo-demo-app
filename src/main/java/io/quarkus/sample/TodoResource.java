@@ -31,6 +31,9 @@ public class TodoResource {
     @GET
     @Path("/{id}")
     @Operation(description = "Get a specific todo by id")
+    @Counted(name= "getOneTask", description = "How many get method being triggered.")
+    @Timed(name = "getOneTaskTimer", description = "How long get one task perform", unit = MetricUnits.MILLISECONDS)
+    public Todo getOne(@PathParam("id") Long id) {
     public Todo getOne(@PathParam("id") Long id) {
         Todo entity = Todo.findById(id);
         if (entity == null) {
@@ -40,6 +43,8 @@ public class TodoResource {
     }
 
     @POST
+    @Counted(name= "postOneTask", description = "How many get method being triggered.")
+    @Timed(name = "postOneTaskTimer", description = "How long get one task perform", unit = MetricUnits.MILLISECONDS)
     @Transactional
     @Operation(description = "Create a new todo")
     public Response create(@Valid Todo item) {
@@ -64,6 +69,8 @@ public class TodoResource {
     @DELETE
     @Transactional
     @Operation(description = "Remove all completed todos")
+    @Counted(name= "deleteOneTask", description = "How many delete method being triggered.")
+    @Timed(name = "deleteOneTaskTimer", description = "How long delete one task perform", unit = MetricUnits.MILLISECONDS)
     public Response deleteCompleted() {
         Todo.deleteCompleted();
         return Response.noContent().build();

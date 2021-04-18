@@ -1,0 +1,23 @@
+# FROM ubi8/openjdk-8
+FROM ubi8/openjdk-11
+
+LABEL   project="paas-sample" \
+        maintainer="rzhang" \
+        contact="rzhang@redhat.com" \
+        vendor="Red Hat" \
+        is-GA="no" \
+        version="1.0.0" \
+        release-date="2021-02-03"
+
+ENV JAVA_OPTIONS=-Dquarkus.http.host=0.0.0.0
+
+COPY ./target/quarkus-app /quarkus-app
+
+WORKDIR /quarkus-app
+
+EXPOSE 8080
+
+#Develop and DebuSg only
+# CMD [ "/usr/bin/java","-jar", "quarkus-run.jar" ]
+
+ENTRYPOINT [ "/usr/bin/java","-jar", "quarkus-run.jar" ]
