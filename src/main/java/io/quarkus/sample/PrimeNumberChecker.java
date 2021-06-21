@@ -24,26 +24,26 @@ public class PrimeNumberChecker {
     public String checkIfPrime(@PathParam("number") long number) {
         System.out.println("*****debug" + number);
         if (number < 1) {
-            return "Only natural numbers can be prime numbers.";
+            return "质数必须是自然数。";
         }
         if (number == 1) {
-            return "1 is not prime.";
+            return "1 不是质数";
         }
         if (number == 2) {
-                    return "2 is prime.";
+                    return "2 是质数";
         }
         if (number % 2 == 0) {
-            return number + " is not prime, it is divisible by 2.";
+            return number + " 不是质数, 能够被2整除.";
         }
         for (int i = 3; i < Math.floor(Math.sqrt(number)) + 1; i = i + 2) {
             if (number % i == 0) {
-                return number + " is not prime, is divisible by " + i + ".";
+                return number + "不是质数, 能够被 " + i + "整除.";
             }
         }
         if (number > highestPrimeNumberSoFar) {
             highestPrimeNumberSoFar = number;
         }
-        return number + " is prime.";
+        return number + " 是质数.";
     }
 
     @Gauge(name = "highestPrimeNumberSoFar", unit = MetricUnits.NONE, description = "Highest prime number so far.")
