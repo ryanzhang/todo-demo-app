@@ -10,6 +10,7 @@
     "redhat.fabric8-analytics",
     "redhat.vscode-tekton-pipelines",
     "redhat/vscode-knative",
-    "redhat/vscode-openshift-connector"
+    "redhat/vscode-openshift-connector",
+    "GitHub/vscode-pull-request-github"
   ]
 }
