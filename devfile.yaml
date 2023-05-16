@@ -23,9 +23,9 @@ projects:
         origin: 'https://github.com/ryanzhang/todo-demo-app.git'
       checkoutFrom:
         revision: master
-parent:
-  id: java-quarkus
-  registryUrl: 'https://registry.devfile.io'
+# parent:
+#   id: java-quarkus
+#   registryUrl: 'https://registry.devfile.io'
 components:
   - name: tools
     container:
