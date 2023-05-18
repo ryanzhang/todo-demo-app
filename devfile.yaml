@@ -61,4 +61,3 @@ commands:
       commandLine: "mvn quarkus:dev"
       group:
         kind: run
-

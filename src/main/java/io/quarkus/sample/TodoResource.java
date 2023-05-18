@@ -28,7 +28,7 @@ public class TodoResource {
     }
 
     @GET
-    @Operation(description = "Get all the todos")
+    @Operation(description = "Get all the todos tas")
     public List<Todo> getAll() {
         return Todo.listAll(Sort.by("order"));
     }
