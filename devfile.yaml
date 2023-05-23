@@ -34,4 +34,12 @@ commands:
       commandLine: "mvn quarkus:dev"
       group:
         kind: run
+  - id: 2-build-image-locally
+    exec:
+      label: "Quarkus hot run"
+      component: tools
+      workingDir: /projects/todo-demo-app
+      commandLine: "podman build -f src/main/docker/Dockerfile.ubi -t myinterregistryurl:latest"
+      group:
+        kind: run
 
