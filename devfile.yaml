@@ -12,8 +12,8 @@ components:
   - name: tools
     container:
       image: registry.redhat.io/devspaces/udi-rhel8:3.5
-      memoryLimit: 2048Mi
-      cpuLimit: 1000m
+      memoryLimit: 4048Mi
+      cpuLimit: 2000m
       mountSources: true
       endpoints:
         - name: http-8080
