@@ -1,6 +1,6 @@
 # TODO Application with Quarkus
 
-[![Contribute](https://www.eclipse.org/che/contribute.svg)](https://devspaces.apps.cluster-rv7bn.rv7bn.sandbox103.opentlc.com/workspace17dd6c7ddcb643c9/universal-developer-image/3100/)
+[![Contribute](https://www.eclipse.org/che/contribute.svg)](https://devspaces.apps.cluster-2fnkq.2fnkq.sandbox808.opentlc.com/#https://github.com/ryanzhang/todo-demo-app/tree/devspaces-demo?new)
 
 Try the PR process again!
 
