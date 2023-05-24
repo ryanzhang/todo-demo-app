@@ -1,0 +1,5 @@
+checks:
+  exclude:
+    - "latest-tag"
+  ignorePaths:
+    - /projects/todo-demo-app/deployment/todo-app-deployment/templates/tests/test-connection.yaml
