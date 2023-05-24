@@ -38,15 +38,17 @@ commands:
       label: "Build Image"
       component: tools
       workingDir: /projects/todo-demo-app
-      commandLine: "podman build -f src/main/docker/Dockerfile.ubi -t image-registry.openshift-image-registry:5000/user1-devspaces/todo-app:latest"
+      commandLine: "podman build -f src/main/docker/Dockerfile.ubi -t image-registry.openshift-image-registry:5000/user1-devspaces/todo-app:latest ."
       group:
         kind: run
-  - id: 3-deploy
+  - id: 3-deploy-dev
     exec:
-      label: "Deploy to b-team-integration"
+      label: "Deploy to Sandbox"
       component: tools
       workingDir: /projects/todo-demo-app
-      commandLine: "podman build -f src/main/docker/Dockerfile.ubi -t myinterregistryurl:latest"
+      commandLine: "oc project user1-devspaces && helm upgrade todo-app deployment/todo-app-deployment --install"
       group:
         kind: run
+
+
 
