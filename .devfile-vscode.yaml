@@ -1,0 +1,54 @@
+schemaVersion: 2.2.0
+metadata:
+  name: todo-demo-app-dev-environment
+projects:
+  - name: todo-demo-app
+    git:
+      remotes:
+        origin: 'https://github.com/ryanzhang/todo-demo-app.git'
+      checkoutFrom:
+        revision: devspaces-with-odo
+components:
+  - name: tools
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel8:3.5
+      memoryLimit: 4048Mi
+      cpuLimit: 2000m
+      mountSources: true
+      endpoints:
+        - name: http-8080
+          targetPort: 8080
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+  - name: m2
+    volume:
+      size: 3G   
+commands:
+  - id: 1-dev
+    exec:
+      label: "Quarkus hot run"
+      component: tools
+      workingDir: /projects/todo-demo-app
+      commandLine: "mvn quarkus:dev"
+      group:
+        kind: run
+  - id: 2-build-image-locally
+    exec:
+      label: "Build Image"
+      component: tools
+      workingDir: /projects/todo-demo-app
+      commandLine: "podman build -f src/main/docker/Dockerfile.ubi -t image-registry.openshift-image-registry.svc:5000/user1-devspaces/todo-app:latest ."
+      group:
+        kind: run
+  - id: 3-deploy-dev
+    exec:
+      label: "Deploy to Sandbox"
+      component: tools
+      workingDir: /projects/todo-demo-app
+      commandLine: "oc project user1-devspaces && helm upgrade todo-app deployment/todo-app-deployment --install"
+      group:
+        kind: run
+
+
+
