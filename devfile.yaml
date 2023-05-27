@@ -1,3 +1,9 @@
+variables:
+  # CONTAINER_IMAGE: image-registry.openshift-image-registry.svc:5000/user1-devspaces/todo-app
+  CONTAINER_IMAGE: quay.io/rzhang/todo-app
+  RESOURCE_NAME: todo-app
+  CONTAINER_PORT: "8080"
+  DOMAIN_NAME: todo-app-user1-devspaces.apps.cluster-2fnkq.2fnkq.sandbox808.opentlc.com
 commands:
 - exec:
     commandLine: mvn -Dmaven.repo.local=/home/user/.m2/repository compile
@@ -24,6 +30,28 @@ commands:
     hotReloadCapable: true
     workingDir: ${PROJECT_SOURCE}
   id: dev-debug
+- id: deploy
+  composite:
+    commands:
+      - build-image
+      - openshift-deployment
+      - openshift-service
+      - openshift-url
+    group:
+      isDefault: true
+      kind: deploy
+- id: build-image
+  apply:
+    component: outerloop-build
+- id: openshift-deployment
+  apply:
+    component: outerloop-build
+- id: openshift-service
+  apply: 
+    component: outerloop-service
+- id: openshift-url
+  apply:
+    component: outerloop-url
 components:
 - container:
     args:
@@ -39,13 +67,78 @@ components:
     env:
     - name: DEBUG_PORT
       value: "5005"
-    image: registry.access.redhat.com/ubi8/openjdk-17
+    image: registry.access.redhat.com/ubi8/openjdk-11
     memoryLimit: 512Mi
     mountSources: true
     volumeMounts:
     - name: m2
-      path: /home/user/.m2
+      path: /home/user/.m2/repository
   name: tools
+- name: outerloop-build
+  image:
+    dockerfile:
+      buildContext: ${PROJECT_SOURCE}
+      rootRequired: false
+      uri: ./src/main/docker/Dockerfile.ubi
+    imageName: "{{CONTAINER_IMAGE}}"
+- name: outerloop-deployment
+  kubernetes:
+    inlined: |
+      kind: Deployment
+      apiVersion: apps/v1
+      metadata:
+        name: {{RESOURCE_NAME}}
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: {{RESOURCE_NAME}}
+        template:
+          metadata:
+            labels:
+              app: {{RESOURCE_NAME}}
+          spec:
+            containers:
+              - name: {{RESOURCE_NAME}}
+                image: {{CONTAINER_IMAGE}}
+                ports:
+                  - name: http
+                    containerPort: {{CONTAINER_PORT}}
+                    protocol: TCP
+                resources:
+                  limits:
+                    memory: "1024Mi"
+                    cpu: "500m"
+- name: outerloop-service
+  kubernetes:
+    inlined: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: {{RESOURCE_NAME}}
+      spec:
+        ports:
+        - name: "{{CONTAINER_PORT}}"
+          port: {{CONTAINER_PORT}}
+          protocol: TCP
+          targetPort: {{CONTAINER_PORT}}
+        selector:
+          app: {{RESOURCE_NAME}}
+        type: ClusterIP
+- name: outerloop-url
+  kubernetes:
+    inlined: |
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: {{RESOURCE_NAME}}
+      spec:
+        path: /
+        to:
+          kind: Service
+          name: {{RESOURCE_NAME}}
+        port:
+          targetPort: {{CONTAINER_PORT}}
 - name: m2
   volume:
     size: 3Gi
@@ -64,7 +157,7 @@ metadata:
   - Quarkus
   version: 1.3.0
   website: https://quarkus.io
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 starterProjects:
 - name: community
   zip:
