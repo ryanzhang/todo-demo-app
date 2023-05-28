@@ -7,7 +7,7 @@ projects:
       remotes:
         origin: 'https://github.com/ryanzhang/todo-demo-app.git'
       checkoutFrom:
-        revision: devspaces-demo
+        revision: devspaces-demo-with-database
 components:
   - name: tools
     container:
