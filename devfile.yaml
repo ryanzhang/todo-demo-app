@@ -12,7 +12,7 @@ components:
   - name: tools
     container:
       # image: registry.redhat.io/devspaces/udi-rhel8:3.5
-      image: quay.io/rzhang/myudi-rhel8:3.5-1
+      image: quay.io/rzhang/myudi-rhel8:3.5-2
       memoryLimit: 4048Mi
       cpuLimit: 2000m
       mountSources: true
