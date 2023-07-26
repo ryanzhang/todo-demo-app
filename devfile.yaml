@@ -3,7 +3,7 @@ variables:
   CONTAINER_IMAGE: quay.io/rzhang/todo-app
   RESOURCE_NAME: todo-app
   CONTAINER_PORT: "8080"
-  DOMAIN_NAME: todo-app-user1-devspaces.apps.cluster-2fnkq.2fnkq.sandbox808.opentlc.com
+  DOMAIN_NAME: todo-app-user1-devspaces.apps.cluster-279b2.279b2.sandbox1314
 commands:
 - exec:
     commandLine: mvn -Dmaven.repo.local=/home/user/.m2/repository compile
