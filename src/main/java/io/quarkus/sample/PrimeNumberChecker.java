@@ -6,10 +6,10 @@ import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("/api/prime")
 public class PrimeNumberChecker {
